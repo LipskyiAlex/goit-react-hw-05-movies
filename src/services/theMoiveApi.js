@@ -41,13 +41,30 @@ export async function getMovieById(id) {
 export async function getCastById(id) {
   try {
     const { data } = await axios.get(
-      `movie/${id}/cast?api_key=${API_KEY}`
+      `movie/${id}/credits?api_key=${API_KEY}`
     );
-    console.log(data);
+
     return data;
   } catch (error) {
     return Notiflix.Notify.failure(
       `${error.message}, please contact the administrator`
     );
   }
+}
+
+
+export async function getReviewsById (id) {
+
+    try {
+
+        const {data} = await axios.get(
+            `movie/${id}/reviews?api_key=${API_KEY}`
+        )
+
+        return data;
+    } catch(error) {
+        return Notiflix.Notify.failure(
+            `${error.message}, please contact the administrator`
+          );
+    }
 }

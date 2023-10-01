@@ -1,20 +1,21 @@
 import { useState, useEffect} from 'react';
 import {getMovieById} from '../services/theMoiveApi';
-import { NavLink,useParams,Outlet } from "react-router-dom"
+import { NavLink,useParams,Outlet,useLocation,Link } from "react-router-dom"
 const MovieDetails = () => {
 
+    const location = useLocation();
     const {movieId} = useParams();
-    const [movie, setMovie] = useState({});
+    const [movie, setMovie] = useState([]);
 
     useEffect(() => {
 
         getMovieById(movieId)
-        .then(({id,title,vote_average,overview,genres,poster_path}) => setMovie({id,title,vote_average,overview, genres,poster_path}))
+        .then(({title,vote_average,overview,genres,poster_path}) => setMovie({title,vote_average,overview, genres,poster_path}))
         
     },[movieId])
 
 
-    const {id,title,vote_average,overview, genres,poster_path} = movie;
+    const {title = "No title",vote_average,overview, genres,poster_path} = movie;
  
      const genreNames = genres?genres.map((genre) => genre.name).join(" "):'';
      const posterPath = poster_path?poster_path:'';
@@ -22,6 +23,7 @@ const MovieDetails = () => {
      return (
      
         <div>
+            <Link to={location.state.from}>Back to products</Link>
             <img src={`https://image.tmdb.org/t/p/w300${posterPath}`} alt={title} width='300'/>
             <h1>{title}</h1>
             <p>{vote_average}</p>
@@ -33,10 +35,11 @@ const MovieDetails = () => {
              <h3>Additional informations</h3>
              <ul>
                 <li><NavLink to={`/movies/${movieId}/cast`} id={movieId}>Cast</NavLink>
-                <Outlet/></li>
+               </li>
                 <li><NavLink to={`/movies/${movieId}/reviews`} id={movieId}>Reviews</NavLink>
-                <Outlet/></li>
+                </li>
              </ul>
+             <Outlet/>
         </div>
 
     )
