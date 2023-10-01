@@ -1,25 +1,24 @@
-import { useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { Trends } from '../services/theMoiveApi';
+import {MoviesList} from '../components/MoviesList/MoviesList';
+
 
 const Home = () => {
+  const [trendingMovies, setTrendingMovies] = useState([]);
 
-  
 
   useEffect(() => {
+   
+    Trends()
+    .then(movies => setTrendingMovies(movies));
+  }, []);
 
-    fetch('https://api.themoviedb.org/3/trending/all/week?api_key=ffd1ae05d42dfac2dc67614233fe514e')
-    .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-  },[])
-
-    return (
-
-        <h1>Trending today</h1>
-     )
-  
-}
+  return (
+    <div>
+      <h1>Trending today</h1>
+       <MoviesList trendingMovies={trendingMovies}/>
+    </div>
+  );
+};
 
 export default Home;
-
-// `trending/movie/week?api_key=${API_KEY}`);
-
