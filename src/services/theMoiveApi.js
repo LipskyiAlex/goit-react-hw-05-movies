@@ -5,11 +5,13 @@ axios.defaults.baseURL = 'https://api.themoviedb.org/3/';
 
 const API_KEY = 'ffd1ae05d42dfac2dc67614233fe514e';
 
-export async function Trends() {
+export async function getMovieTrends() {
   try {
+    
     const { data } = await axios.get(`trending/all/day?api_key=${API_KEY}`);
 
     return data.results;
+    
   } catch (error) {
     return Notiflix.Notify.failure(
       `${error.message}, please contact the administrator`
