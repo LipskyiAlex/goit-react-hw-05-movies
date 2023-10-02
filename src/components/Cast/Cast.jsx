@@ -7,11 +7,16 @@ const Cast = () => {
   const [casts, setCasts] = useState({});
 
   useEffect(() => {
-    getCastById(movieId)
-    .then(data => {
-      setCasts(data);
-
-    });
+    const fetchCasts = async () => {
+      try {
+        const castsData = await getCastById(movieId);
+        setCasts(castsData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+  
+    fetchCasts();
   }, [movieId]);
 
   const {cast} = casts;

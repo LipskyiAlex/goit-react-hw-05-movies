@@ -1,39 +1,41 @@
-
-import {useState,useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import {getReviewsById} from '../../services/theMoiveApi';
+import { getReviewsById } from '../../services/theMoiveApi';
 const Reviews = () => {
-     
-    
-    const {movieId} = useParams();
+  const { movieId } = useParams();
 
-    const [reviews,setReviews] = useState({})
+  const [reviews, setReviews] = useState({});
 
-    useEffect(() => {
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const reviewsData = await getReviewsById(movieId);
+        setReviews(reviewsData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
 
-        getReviewsById(movieId)
-        .then(data => setReviews(data));
+    fetchReviews();
+  }, [movieId]);
 
-    }, [movieId])
-
-    const {results} = reviews;
-;
-    return ( 
-        
-        <div>
-            {results? (  <ul>
-           {results.map(({author,id,content}) => (
-            
-              <li key={id}>
-                <h3>Author: {author}</h3>
-                <p>{content}</p>
-              </li>
-           ) )}       
-        </ul>) : <p>Something went wrong</p>}
-        </div>
-      
-    )
-
-}
+  const { results } = reviews;
+  return (
+    <div>
+      {results ? (
+        <ul>
+          {results.map(({ author, id, content }) => (
+            <li key={id}>
+              <h3>Author: {author}</h3>
+              <p>{content}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>We don't have any reviews for this movie</p>
+      )}
+    </div>
+  );
+};
 
 export default Reviews;

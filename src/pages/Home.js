@@ -8,7 +8,8 @@ const Home = () => {
 
 
   useEffect(() => {
-   
+
+  
     Trends()
     .then(movies => setTrendingMovies(movies));
   }, []);
@@ -16,7 +17,7 @@ const Home = () => {
   return (
     <div>
       <h1>Trending today</h1>
-       <MoviesList trendingMovies={trendingMovies}/>
+       <MoviesList movies={trendingMovies}/>
     </div>
   );
 };

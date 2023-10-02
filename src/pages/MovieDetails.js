@@ -6,16 +6,29 @@ const MovieDetails = () => {
     const location = useLocation();
     const {movieId} = useParams();
     const [movie, setMovie] = useState([]);
+    const backLinkHref = location.state?.from??'/';
 
     useEffect(() => {
 
-        getMovieById(movieId)
-        .then(({title,vote_average,overview,genres,poster_path}) => setMovie({title,vote_average,overview, genres,poster_path}))
+        const fetchMovie = async () => {
+
+            try {
+
+                const movieData = await getMovieById(movieId)
+                const {title = "No title",vote_average,overview, genres,poster_path} = movieData;
+                setMovie({ title, vote_average, overview, genres, poster_path });
+            } catch (error) {
+
+                console.log(error.messsage);
+            }
+            }
+            
+            fetchMovie();
         
     },[movieId])
 
 
-    const {title = "No title",vote_average,overview, genres,poster_path} = movie;
+    const { title, vote_average, overview, genres, poster_path } = movie;
  
      const genreNames = genres?genres.map((genre) => genre.name).join(" "):'';
      const posterPath = poster_path?poster_path:'';
@@ -23,7 +36,7 @@ const MovieDetails = () => {
      return (
      
         <div>
-            <Link to={location.state.from}>Back to products</Link>
+            <Link to={backLinkHref}>Back to products</Link>
             <img src={`https://image.tmdb.org/t/p/w300${posterPath}`} alt={title} width='300'/>
             <h1>{title}</h1>
             <p>{vote_average}</p>
