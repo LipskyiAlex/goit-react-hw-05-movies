@@ -40,14 +40,13 @@ const Movies = () => {
      
     return (
 
-        <div>
-         
+        <>
          <form onSubmit={handleSubmit} >
             <input onChange={e => handleChange(e)} name="text"/>
             <button type='submit'>Search</button>
          </form>
            <MoviesList movies={movies}/>
-        </div>
+        </>
     )
 
 }

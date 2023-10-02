@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import {getMovieById} from '../services/theMoiveApi';
+import MovieCard from '../components/MovieCard/MovieCard';
 import { NavLink,useParams,Outlet,useLocation,Link } from "react-router-dom"
 const MovieDetails = () => {
 
@@ -35,16 +36,10 @@ const MovieDetails = () => {
      
      return (
      
-        <div>
+        <>
             <Link to={backLinkHref}>Back to products</Link>
-            <img src={`https://image.tmdb.org/t/p/w300${posterPath}`} alt={title} width='300'/>
-            <h1>{title}</h1>
-            <p>{vote_average}</p>
-            <h2>Overview</h2>
-            <p>{overview}</p>
-            <h3>Genres</h3>
-             <p>{genreNames}</p>
-
+            <MovieCard posterPath={posterPath} title={title} vote_average={vote_average} overview={overview} genreNames={genreNames}/>
+           
              <h3>Additional informations</h3>
              <ul>
                 <li><NavLink to={`/movies/${movieId}/cast`} id={movieId}>Cast</NavLink>
@@ -53,7 +48,7 @@ const MovieDetails = () => {
                 </li>
              </ul>
              <Outlet/>
-        </div>
+        </>
 
     )
 
