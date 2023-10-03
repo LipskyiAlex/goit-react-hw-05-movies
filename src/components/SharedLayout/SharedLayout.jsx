@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import {Header, Nav,StyledNavLink} from './SharedLayout.styled';
 import {FcHome,FcFilmReel} from 'react-icons/fc';
-export const SharedLayout = () => {
+const SharedLayout = () => {
 
 
   return (
@@ -18,3 +18,5 @@ export const SharedLayout = () => {
     </div>
   );
 };
+
+export default SharedLayout;
