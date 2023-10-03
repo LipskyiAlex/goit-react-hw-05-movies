@@ -2,6 +2,7 @@ import { Link,useLocation } from 'react-router-dom';
 import {List,Item,Title} from './MoviesList.styled';
 
 export const MoviesList = ({movies}) => {
+    
     const location = useLocation(); 
 
     return (    
