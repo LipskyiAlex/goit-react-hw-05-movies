@@ -2,6 +2,7 @@ import { useState, useEffect} from 'react';
 import {getMovieById} from '../services/theMoiveApi';
 import MovieCard from '../components/MovieCard/MovieCard';
 import { NavLink,useParams,Outlet,useLocation,Link } from "react-router-dom"
+import {Title,List,Item} from './MovieDetails.styled';
 const MovieDetails = () => {
 
     const location = useLocation();
@@ -40,13 +41,13 @@ const MovieDetails = () => {
             <Link to={backLinkHref}>Back to products</Link>
             <MovieCard posterPath={posterPath} title={title} vote_average={vote_average} overview={overview} genreNames={genreNames}/>
            
-             <h3>Additional informations</h3>
-             <ul>
-                <li><NavLink to={`/movies/${movieId}/cast`} id={movieId}>Cast</NavLink>
-               </li>
-                <li><NavLink to={`/movies/${movieId}/reviews`} id={movieId}>Reviews</NavLink>
-                </li>
-             </ul>
+             <Title>Additional informations</Title>
+             <List>
+                <Item><NavLink to={`/movies/${movieId}/cast`} id={movieId}>Cast</NavLink>
+               </Item>
+                <Item><NavLink to={`/movies/${movieId}/reviews`} id={movieId}>Reviews</NavLink>
+                </Item>
+             </List>
              <Outlet/>
         </>
 

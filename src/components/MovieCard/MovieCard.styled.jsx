@@ -3,8 +3,8 @@ import styled from "@emotion/styled"
 export const Container = styled.div`
 display: flex;
   flex-direction: column;
-  align-items: center; /* Horizontally center content */
-  justify-content: center; /* Vertically center content */
+  align-items: center;
+  justify-content: center; 
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -12,7 +12,7 @@ display: flex;
   background-color: #fff;
   margin-bottom: 20px;
   width: 300px;
-  margin: 0 auto; /* Cent
+  margin: 0 auto; 
 `
 
 export const Poster = styled.img`
@@ -39,7 +39,7 @@ margin: 10px 0;
 export const SecondParagraph = styled.p`
 
 font-weight: bold;
-  color: #3498db; /* Change to your desired color */
+  color: #3498db; 
   margin-top: 10px;
 
 `

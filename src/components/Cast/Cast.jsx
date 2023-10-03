@@ -1,7 +1,7 @@
 import { getCastById } from '../../services/theMoiveApi';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-
+import {List,Item,Title,SubTitle} from './Cast.styled';
 const Cast = () => {
   const { movieId } = useParams();
   const [casts, setCasts] = useState({});
@@ -24,9 +24,9 @@ const Cast = () => {
   return (
     <div>
       {cast ? (
-        <ul>
+        <List>
           {cast.map(({ id, name, character, profile_path }) => (
-            <li key={id}>
+            <Item key={id}>
               <img
                 src={`https://image.tmdb.org/t/p/w200${profile_path}`}
                 alt={name} width='200'
@@ -34,11 +34,11 @@ const Cast = () => {
                     e.target.src = '/placeholder.jpg'; 
                   }}
               />
-              <h3>{name}</h3>
-              <p>{character}</p>
-            </li>
+              <Title>{name}</Title>
+              <SubTitle>{character}</SubTitle>
+            </Item>
           ))}
-        </ul>
+        </List>
       ) : (
         <p>Loading cast information...</p>
       )}

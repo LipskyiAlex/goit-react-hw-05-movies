@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { getReviewsById } from '../../services/theMoiveApi';
+import {List,Item,Title} from './Reviews.styled';
+
 const Reviews = () => {
   const { movieId } = useParams();
 
@@ -23,14 +25,14 @@ const Reviews = () => {
   return (
     <div>
       {results ? (
-        <ul>
+        <List>
           {results.map(({ author, id, content }) => (
-            <li key={id}>
-              <h3>Author: {author}</h3>
+            <Item key={id}>
+              <Title>Author: {author}</Title>
               <p>{content}</p>
-            </li>
+            </Item>
           ))}
-        </ul>
+        </List>
       ) : (
         <p>We don't have any reviews for this movie</p>
       )}
