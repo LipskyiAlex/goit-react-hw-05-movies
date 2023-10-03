@@ -1,10 +1,19 @@
-import { useState} from 'react';
+import { useState,useEffect} from 'react';
 import {Notify} from 'notiflix';
 import {getMovieByQuery} from '../services/theMoiveApi';
 import {MoviesList} from '../components/MoviesList/MoviesList';
 
 const Movies = () => {
 
+    useEffect(() => {
+        const onscroll = function () {
+           if (window.innerHeight + window.scrollY >= document.body.offsetheight) {
+             console.log("you're at the bottom of the page")
+           }
+        }
+        window.addEventListener('scroll', onscroll)
+        return () => window.removeEventListener('scroll', onscroll)
+     }, [])
      
     const [query,setQuery] = useState('');
     const [movies,setMovies] = useState([]);

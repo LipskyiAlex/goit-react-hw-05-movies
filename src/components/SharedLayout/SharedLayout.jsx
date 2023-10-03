@@ -1,10 +1,10 @@
 import { Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
 import {Header, Nav,StyledNavLink} from './SharedLayout.styled';
 import {FcHome,FcFilmReel} from 'react-icons/fc';
 export const SharedLayout = () => {
 
 
-  
   return (
     <div>
       <Header>
@@ -14,6 +14,7 @@ export const SharedLayout = () => {
         </Nav>
       </Header>
       <Outlet/>
+      <Suspense fallback={<div>Loading page...</div>}></Suspense>
     </div>
   );
 };
