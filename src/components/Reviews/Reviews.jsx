@@ -22,6 +22,7 @@ const Reviews = () => {
   }, [movieId]);
 
   const { results } = reviews;
+
   return (
     <div>
       {results ? (
