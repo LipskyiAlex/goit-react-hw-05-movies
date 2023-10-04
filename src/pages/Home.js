@@ -1,37 +1,54 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { getMovieTrends } from '../services/theMoiveApi';
 import { MoviesList } from '../components/MoviesList/MoviesList';
 import { TitleMain } from '../components/Title/Title';
 
+
 const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [fetching, setFetching] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setloading] = useState(true);
 
   useEffect(() => {
-    document.addEventListener('scroll', handleScroll);
+    
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+       document.addEventListener('scroll', handleScroll);
+ 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+       fetchMovies();
+
     return function () {
       document.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  },[]);
+
+  const fetchMovies = useCallback(async () => {
+
+    try {
+    
+    const fetchedData = await getMovieTrends(currentPage);
+
+      setTrendingMovies((prevState) => [...prevState,...fetchedData]);
+  
+       setCurrentPage(prev => prev+1)   
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+
+      setloading(false);
+    }
+  },[currentPage]);
 
 
   useEffect(() => {
 
-   
-      const fetchMovies = async () => {
-        try {
-          const fetchedData = await getMovieTrends(1);
+      if(loading) {
 
-          setTrendingMovies(fetchedData);
-        
-        } catch (error) {
-          console.log(error.message);
-        } 
-      };
-      fetchMovies();
+        fetchMovies();
+      }
+     
 
-  },[]);
+  },[loading,fetchMovies]);
 
   const handleScroll = e => {
     if (
@@ -39,7 +56,8 @@ const Home = () => {
         (e.target.documentElement.scrollTop + window.innerHeight) <
       100
     ) {
-      console.log('fethc');
+    
+      setloading(true);
     }
   };
 
