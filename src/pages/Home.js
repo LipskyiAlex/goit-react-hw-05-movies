@@ -1,6 +1,7 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { getMovieTrends } from '../services/theMoiveApi';
-import { MoviesList } from '../components/MoviesList/MoviesList';
+import MoviesList from 'components/MoviesList/MoviesList';
 import { TitleMain } from '../components/Title/Title';
 import throttle from 'lodash.throttle';
 
@@ -11,13 +12,20 @@ const Home = () => {
 
   useEffect(() => {
     const handleScroll = throttle(e => {
-      if (fetching) return;
+
+      if (fetching) {
+
+ 
+        return;
+      } 
+    
 
       if (
         e.target.documentElement.scrollHeight -
           (e.target.documentElement.scrollTop + window.innerHeight) <
         100
       ) {
+
         setCurrentPage(prevPage => prevPage + 1);
       }
     }, 1000);
@@ -54,28 +62,4 @@ const Home = () => {
 
 export default Home;
 
-// const fetchMovies = useCallback(async () => {
 
-//   try {
-
-//   const fetchedData = await getMovieTrends(currentPage);
-
-//     setTrendingMovies((prevState) => [...prevState,...fetchedData]);
-
-//      setCurrentPage(prev => prev+1)
-//   } catch (error) {
-//     console.log(error.message);
-//   } finally {
-
-//     setloading(false);
-//   }
-// },[currentPage]);
-
-// useEffect(() => {
-
-//     if(loading) {
-
-//       fetchMovies();
-//     }
-
-// },[loading,fetchMovies]);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix';
 import { getMovieByQuery } from '../services/theMoiveApi';
-import { MoviesList } from '../components/MoviesList/MoviesList';
+import  MoviesList from '../components/MoviesList/MoviesList';
 
 const Movies = () => {
   const [query, setQuery] = useState('');

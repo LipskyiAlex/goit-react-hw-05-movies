@@ -1,13 +1,16 @@
 import { Link,useLocation } from 'react-router-dom';
 import {List,Item,Title} from './MoviesList.styled';
 
-export const MoviesList = ({movies}) => {
+const MoviesList = ({movies}) => {
 
     const location = useLocation(); 
+
+    const uniqueMoves = Array.from(new Set(movies.map((movie) => movie.id))).map((id) => movies.find((movie) => movie.id === id));
+
     return (    
 
         <List>
-          {movies.map(({id,title,name,poster_path}) => (
+          {uniqueMoves.map(({id,title,name,poster_path}) => (
               <Item key={id}>
                <Link to={`/movies/${id}`} state={{from:location}}>
                 <img src={`https://image.tmdb.org/t/p/w200${poster_path}`} alt={title?title:name} width='200'/>
@@ -20,3 +23,5 @@ export const MoviesList = ({movies}) => {
     )
 
 }
+
+export default MoviesList;
