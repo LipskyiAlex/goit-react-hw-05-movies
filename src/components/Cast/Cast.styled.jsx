@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import colors from '../../utilites/colors';
 
 export const List = styled.ul`
 
