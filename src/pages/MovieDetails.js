@@ -54,12 +54,12 @@ const MovieDetails = () => {
       <Title>Additional informations</Title>
       <List>
         <Item>
-          <NavLink to={`/movies/${movieId}/cast`} id={movieId}>
+          <NavLink to={`cast`} id={movieId}>
             Cast
           </NavLink>
         </Item>
         <Item>
-          <NavLink to={`/movies/${movieId}/reviews`} id={movieId}>
+          <NavLink to={`reviews`} id={movieId}>
             Reviews
           </NavLink>
         </Item>
