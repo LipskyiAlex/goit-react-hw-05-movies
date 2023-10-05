@@ -23,9 +23,10 @@ const Reviews = () => {
 
   const { results } = reviews;
 
+  
   return (
     <div>
-      {results ? (
+      {results && results.length > 0? (
         <List>
           {results.map(({ author, id, content }) => (
             <Item key={id}>

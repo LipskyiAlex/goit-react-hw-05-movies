@@ -20,12 +20,12 @@ export async function getMovieTrends(currentPage) {
   }
 }
 
-export async function getMovieByQuery (query) {
+export async function getMovieByQuery (query,currentPage) {
 
     
   try {
 
-    const {data} = await axios.get(`search/movie?api_key=${API_KEY}&query=${query}`);
+    const {data} = await axios.get(`search/movie?api_key=${API_KEY}&query=${query}&page=${currentPage}`);
 
     return data;
   } catch (error) {
