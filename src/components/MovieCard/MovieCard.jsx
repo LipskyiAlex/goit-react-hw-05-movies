@@ -1,4 +1,4 @@
-import {Container,Poster,Title,FirstParagraph,SecondParagraph} from './MovieCard.styled';
+import {Container,Poster,Title,FirstParagraph,SecondParagraph,FirstSubTitle,SecondSubTitle} from './MovieCard.styled';
 
 
 const MovieCard = ({posterPath,title,vote_average,overview,genreNames}) => {
@@ -10,9 +10,9 @@ const MovieCard = ({posterPath,title,vote_average,overview,genreNames}) => {
         <Poster src={`https://image.tmdb.org/t/p/w300${posterPath}`} alt={title} width='300'/>
         <Title>{title}</Title>
         <p>{vote_average}</p>
-        <h2>Overview</h2>
+        <FirstSubTitle>Overview</FirstSubTitle>
         <FirstParagraph>{overview}</FirstParagraph>
-        <h3>Genres</h3>
+        <SecondSubTitle>Genres</SecondSubTitle>
          <SecondParagraph>{genreNames}</SecondParagraph>
          </Container>
     )
