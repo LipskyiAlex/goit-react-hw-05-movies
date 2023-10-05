@@ -14,16 +14,13 @@ const Home = () => {
     const handleScroll = throttle(e => {
 
       if (fetching) {
-
- 
         return;
       } 
-    
-
+  
       if (
         e.target.documentElement.scrollHeight -
           (e.target.documentElement.scrollTop + window.innerHeight) <
-        100
+        200
       ) {
 
         setCurrentPage(prevPage => prevPage + 1);
