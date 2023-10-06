@@ -2,10 +2,10 @@ import { Outlet } from 'react-router-dom';
 import { Suspense } from 'react';
 import {Header, Nav,StyledNavLink} from './SharedLayout.styled';
 import {FcHome,FcFilmReel} from 'react-icons/fc';
-import Loader from '../Loader/Loader';
+import Load from '../Loader/Loader';
+
+
 const SharedLayout = () => {
-
-
   return (
     <div>
       <Header>
@@ -14,7 +14,7 @@ const SharedLayout = () => {
           <StyledNavLink to="/movies"><FcFilmReel size="22"/> Movies</StyledNavLink>
         </Nav>
       </Header>
-      <Suspense fallback={<Loader/>}>
+      <Suspense fallback={<Load/>}>
       <Outlet/>
       </Suspense>
     </div>
