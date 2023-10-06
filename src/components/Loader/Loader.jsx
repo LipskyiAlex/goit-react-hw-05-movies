@@ -1,27 +1,18 @@
-import { Vortex } from 'react-loader-spinner';
+import { Wrapper,Wheel,Text } from "./Loader.styled"
 
 
-const Loader = () => {
+const Load = () => {
 
-    <div
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh', 
-    }}
-  >
-   <Vortex
-visible={true}
-height="80"
-width="80"
-ariaLabel="vortex-loading"
-wrapperStyle={{}}
-wrapperClass="vortex-wrapper"
-colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
-/>
-  </div>
+
+  return (
+      
+    <Wrapper>
+  <Wheel ></Wheel>
+  <Text ></Text>
+</Wrapper>
+
+  )
 
 }
 
-export default Loader;
+export default Load;
