@@ -4,11 +4,13 @@ import { getMovieTrends } from '../services/theMoiveApi';
 import MoviesList from 'components/MoviesList/MoviesList';
 import { TitleMain } from '../components/Title/Title';
 import throttle from 'lodash.throttle';
+import Loader from 'components/Loader/Loader';
 
 const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     const handleScroll = throttle(e => {
@@ -53,6 +55,7 @@ const Home = () => {
     <>
       <TitleMain>Trending today</TitleMain>
       <MoviesList movies={trendingMovies} />
+      {fetching && <Loader/> } 
     </>
   );
 };

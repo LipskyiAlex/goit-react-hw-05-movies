@@ -9,6 +9,7 @@ import {
   Link,
 } from 'react-router-dom';
 import { Title, List, Item } from './MovieDetails.styled';
+
 const MovieDetails = () => {
   const location = useLocation();
   const { movieId } = useParams();
@@ -19,14 +20,8 @@ const MovieDetails = () => {
     const fetchMovie = async () => {
       try {
         const movieData = await getMovieById(movieId);
-        const {
-          title = 'No title',
-          vote_average,
-          overview,
-          genres,
-          poster_path,
-        } = movieData;
-        setMovie({ title, vote_average, overview, genres, poster_path });
+       
+        setMovie(movieData);
       } catch (error) {
         console.log(error.messsage);
       }

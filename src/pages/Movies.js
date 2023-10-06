@@ -1,91 +1,37 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Notify } from 'notiflix';
 import { getMovieByQuery } from '../services/theMoiveApi';
-import  MoviesList from '../components/MoviesList/MoviesList';
-import throttle from 'lodash.throttle';
+import MoviesList from '../components/MoviesList/MoviesList';
+import Form from '../components/Form/Form.jsx';
+import { useSearchParams } from 'react-router-dom';
 
 const Movies = () => {
-  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [fetching, setFetching] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const handleScroll = throttle(e => {
+    const currentParamsQuery = searchParams.get('query');
 
-      if (fetching) {
-        return;
-      } 
-  
-      if (
-        e.target.documentElement.scrollHeight -
-          (e.target.documentElement.scrollTop + window.innerHeight) <
-        200
-      ) {
+    if (!currentParamsQuery) return;
 
-        setCurrentPage(prevPage => prevPage + 1);
-      }
-    }, 1000);
-
-    document.addEventListener('scroll', handleScroll);
-
-    return function () {
-      document.removeEventListener('scroll', handleScroll);
-    };
-  }, [fetching]);
-
-  useEffect(() => {
-    if(currentPage ===1) return;
-    const fetchedMovies = async (page,query) => {
+    const fetchedMovies = async () => {
       try {
-        setFetching(true);
-        const fetchedData = await getMovieByQuery(query,page);
-        if(fetchedData.results.length === 0) {
-
+        const fetchedData = await getMovieByQuery(currentParamsQuery);
+        if (fetchedData.length === 0) {
           Notify.failure("We've found nothig by this query");
         }
-        setMovies(prevData => [...prevData, ...fetchedData.results]);
+        setMovies(fetchedData);
       } catch (error) {
         console.log(error.message);
-      } finally {
-        setFetching(false);
       }
     };
-    fetchedMovies(currentPage,query);
-  }, [currentPage,query]);
-
-
-  const handleChange = e => {
-    setQuery(e.target.value);
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    if (query.trim() === '') {
-      return Notify.failure("query can't be empty");
-    }
-
-    try {
-      setCurrentPage(1)
-      const fetchData = await getMovieByQuery(query,1);
-     
-      setMovies(fetchData.results);
-      setFetching(false);
-    } catch (error) {
-      Notify.failure(error.message);
-    }
-  };
-
-
+    fetchedMovies();
+  }, [searchParams]);
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input onChange={e => handleChange(e)} name="text" />
-        <button type="submit">Search</button>
-      </form>
-      <MoviesList movies={movies} />
+      <Form setSearchParams={setSearchParams} />
+      {movies && movies.length > 0 && <MoviesList movies={movies} />}
     </>
   );
 };

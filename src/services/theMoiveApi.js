@@ -8,7 +8,7 @@ const API_KEY = 'ffd1ae05d42dfac2dc67614233fe514e';
 export async function getMovieTrends(currentPage) {
   try {
     
-    const { data } = await axios.get(`trending/all/day?api_key=${API_KEY}&page=${currentPage}`);
+    const { data } = await axios.get(`trending/movie/day?api_key=${API_KEY}&page=${currentPage}`);
   
   
     return data.results;
@@ -20,14 +20,14 @@ export async function getMovieTrends(currentPage) {
   }
 }
 
-export async function getMovieByQuery (query,currentPage) {
+export async function getMovieByQuery (query) {
 
     
   try {
 
-    const {data} = await axios.get(`search/movie?api_key=${API_KEY}&query=${query}&page=${currentPage}`);
+    const {data} = await axios.get(`search/movie?api_key=${API_KEY}&query=${query}`);
 
-    return data;
+    return data.results;
   } catch (error) {
 
     return Notiflix.Notify.failure(
