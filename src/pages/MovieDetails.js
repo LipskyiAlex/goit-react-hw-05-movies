@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getMovieById } from '../services/theMoiveApi';
 import MovieCard from '../components/MovieCard/MovieCard';
+import { Notify } from 'notiflix';
 import {
   NavLink,
   useParams,
@@ -14,6 +15,7 @@ const MovieDetails = () => {
   const location = useLocation();
   const { movieId } = useParams();
   const [movie, setMovie] = useState([]);
+  const [failure, setFailure] = useState(false);
   const backLinkHref = location.state?.from ?? '/';
 
   useEffect(() => {
@@ -23,7 +25,8 @@ const MovieDetails = () => {
        
         setMovie(movieData);
       } catch (error) {
-        console.log(error.messsage);
+        setFailure(true);
+        Notify.failure(error.message);
       }
     };
 
@@ -45,7 +48,7 @@ const MovieDetails = () => {
         overview={overview}
         genreNames={genreNames}
       />
-
+      {failure && <strong>Something went wrong, please contact the administrator</strong>}
       <Title>Additional informations</Title>
       <List>
         <Item>
