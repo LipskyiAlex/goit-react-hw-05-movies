@@ -1,7 +1,9 @@
 import { getCastById } from '../../services/theMoiveApi';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import {List,Item,Title,SubTitle,Placeholder} from './Cast.styled';
+import {List,Item,Title,SubTitle} from './Cast.styled';
+import Placeholder from 'components/Placeholder/Placeholder';
+
 const Cast = () => {
   const { movieId } = useParams();
   const [casts, setCasts] = useState({});
@@ -29,7 +31,7 @@ const Cast = () => {
             <Item key={id}>
               {profile_path ? ( <img
                 src={`https://image.tmdb.org/t/p/w200${profile_path}`}
-                alt={name} width='200'/>) :<Placeholder>Photo will be added soon...</Placeholder>}   
+                alt={name} width='200'/>):<Placeholder title='Photo'/>}   
               <Title>{name}</Title>
               <SubTitle>{character}</SubTitle>
             </Item>

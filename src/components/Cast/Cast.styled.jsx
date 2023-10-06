@@ -47,13 +47,4 @@ text-align:center;
 
 `
 
-export const Placeholder = styled.div`
- 
-width:200px;
-height: 300px;
-background-color: #fff;
-font-style: italic;
-display:flex;
-justify-content:center;
-align-items:center;
-`
+
