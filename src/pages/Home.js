@@ -4,12 +4,13 @@ import { getMovieTrends } from '../services/theMoiveApi';
 import MoviesList from 'components/MoviesList/MoviesList';
 import { TitleMain } from '../components/Title/Title';
 import throttle from 'lodash.throttle';
+import { Notify } from 'notiflix';
 
 const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
-
+  const [failure, setFailure] = useState(false);
   useEffect(() => {
     const handleScroll = throttle(e => {
 
@@ -41,7 +42,9 @@ const Home = () => {
         const fetchedData = await getMovieTrends(page);
         setTrendingMovies(prevData => [...prevData, ...fetchedData]);
       } catch (error) {
-        console.log(error.message);
+          setFailure(true);
+        Notify.failure(error.message);
+      
       } finally {
         setFetching(false);
       }
@@ -52,6 +55,7 @@ const Home = () => {
   return (
     <>
       <TitleMain>Trending today</TitleMain>
+      {failure && <strong>Something went wrong, please contact the administrator</strong>}
       <MoviesList movies={trendingMovies} /> 
     </>
   );

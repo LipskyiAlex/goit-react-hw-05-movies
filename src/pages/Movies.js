@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
+  const [failure, setFailure] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
@@ -22,7 +23,8 @@ const Movies = () => {
         }
         setMovies(fetchedData);
       } catch (error) {
-        console.log(error.message);
+        setFailure(true);
+        Notify.failure(error.message);
       }
     };
     fetchedMovies();
@@ -32,6 +34,7 @@ const Movies = () => {
     <>
       <Form setSearchParams={setSearchParams} />
       {movies && movies.length > 0 && <MoviesList movies={movies} />}
+         {failure && <strong>Something went wrong, please contact the administrator</strong>}
     </>
   );
 };
