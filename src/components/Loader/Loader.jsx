@@ -1,7 +1,7 @@
 import { Wrapper,Wheel,Text } from "./Loader.styled"
 
 
-const Load = () => {
+const Loader = () => {
 
 
   return (
@@ -15,4 +15,4 @@ const Load = () => {
 
 }
 
-export default Load;
+export default Loader;

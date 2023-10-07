@@ -5,11 +5,14 @@ import MoviesList from 'components/MoviesList/MoviesList';
 import { TitleMain } from '../components/Title/Title';
 import throttle from 'lodash.throttle';
 import { Notify } from 'notiflix';
+import Loader from 'components/Loader/Loader';
+import Error from 'components/Error/Error';
 
 const Home = () => {
   const [trendingMovies, setTrendingMovies] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [failure, setFailure] = useState(false);
   useEffect(() => {
     const handleScroll = throttle(e => {
@@ -38,6 +41,7 @@ const Home = () => {
   useEffect(() => {
     const fetchedMovies = async page => {
       try {
+        setLoading(true);
         setFetching(true);
         const fetchedData = await getMovieTrends(page);
         setTrendingMovies(prevData => [...prevData, ...fetchedData]);
@@ -47,6 +51,7 @@ const Home = () => {
       
       } finally {
         setFetching(false);
+        setLoading(false);
       }
     };
     fetchedMovies(currentPage);
@@ -55,8 +60,9 @@ const Home = () => {
   return (
     <>
       <TitleMain>Trending today</TitleMain>
-      {failure && <strong>Something went wrong, please contact the administrator</strong>}
-      <MoviesList movies={trendingMovies} /> 
+      {loading && <Loader/>}
+      {failure && <Error/>}
+       {trendingMovies && trendingMovies.length > 0 &&  <MoviesList movies={trendingMovies} /> } 
     </>
   );
 };
