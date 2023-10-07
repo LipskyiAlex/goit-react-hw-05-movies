@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { getMovieById } from '../services/theMoiveApi';
 import MovieCard from '../components/MovieCard/MovieCard';
+import Loader from 'components/Loader/Loader';
+import Error from 'components/Error/Error';
 import { Notify } from 'notiflix';
 import {
   NavLink,
@@ -15,18 +17,23 @@ const MovieDetails = () => {
   const location = useLocation();
   const { movieId } = useParams();
   const [movie, setMovie] = useState([]);
+  const [loader, setLoader] = useState(false);
   const [failure, setFailure] = useState(false);
-  const backLinkHref = location.state?.from ?? '/';
+  const backLinkHref = useRef(location.state?.from?? '/');
 
   useEffect(() => {
     const fetchMovie = async () => {
       try {
+        setLoader(true);
         const movieData = await getMovieById(movieId);
        
         setMovie(movieData);
       } catch (error) {
         setFailure(true);
         Notify.failure(error.message);
+      } finally {
+
+        setLoader(false);
       }
     };
 
@@ -40,7 +47,8 @@ const MovieDetails = () => {
 
   return (
     <>
-      <Link to={backLinkHref}>Back to products</Link>
+      <Link to={backLinkHref.current}>Back to movies</Link>
+      
       <MovieCard
         posterPath={posterPath}
         title={title}
@@ -48,16 +56,17 @@ const MovieDetails = () => {
         overview={overview}
         genreNames={genreNames}
       />
-      {failure && <strong>Something went wrong, please contact the administrator</strong>}
+      {loader && <Loader/>}
+      {failure && <Error/>}
       <Title>Additional informations</Title>
       <List>
         <Item>
-          <NavLink to={`cast`} id={movieId}>
+          <NavLink to={`cast`}>
             Cast
           </NavLink>
         </Item>
         <Item>
-          <NavLink to={`reviews`} id={movieId}>
+          <NavLink to={`reviews`}>
             Reviews
           </NavLink>
         </Item>

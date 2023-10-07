@@ -3,18 +3,28 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {List,Item,Title,SubTitle} from './Cast.styled';
 import Placeholder from 'components/Placeholder/Placeholder';
+import Loader from 'components/Loader/Loader';
+import Error from 'components/Error/Error';
+import { Notify } from 'notiflix';
 
 const Cast = () => {
   const { movieId } = useParams();
   const [casts, setCasts] = useState({});
+  const [loader, setLoader] = useState(false);
+  const [failure, setFailure] = useState(false);
 
   useEffect(() => {
     const fetchCasts = async () => {
       try {
+        setLoader(true);
         const castsData = await getCastById(movieId);
         setCasts(castsData);
       } catch (error) {
-        console.log(error.message);
+        setFailure(true);
+        Notify.failure(error.message);
+      } finally {
+
+        setLoader(false);
       }
     };
   
@@ -25,7 +35,9 @@ const Cast = () => {
 
   return (
     <div>
-      {cast ? (
+      {loader && <Loader/>}
+      {failure && <Error/>}
+      {cast && (
         <List>
           {cast.map(({ id, name, character, profile_path }) => (
             <Item key={id}>
@@ -37,8 +49,6 @@ const Cast = () => {
             </Item>
           ))}
         </List>
-      ) : (
-        <p>Loading cast information...</p>
       )}
     </div>
   );
